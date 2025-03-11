@@ -5,3 +5,7 @@ Official repo for EscapeCraft (an 3D environment for room escape) and benchmark 
 <img src="./figures/teaser_git.png" alt="Image">
 
 arxiv link will be available soon.
+
+# Example of a successful escape
+
+<img src="./figures/example.png" alt="Image">
