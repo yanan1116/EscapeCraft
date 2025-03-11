@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="static/css/table.css">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="DESCRIPTION META TAG">
+  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
+  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
+  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Roomescape</title>
+  <link rel="icon" type="image/x-icon" href="static\images\escape.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+  <div class="title-bar">
+    <div class="buttons">
+      <a href="#abstract" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Abstract</a>
+      <a href="#introduction" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Introduction</a>
+      <a href="#game settings" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Settings</a>
+      <a href="#results" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Results</a>
+
+    </div>
+  </div>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">How Do Multimodal Large Language Models Handle Complex Multimodal Reasoning? Placing Them in An Extensible Escape Game</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://openreview.net/profile?id=~Ziyue_Wang4" target="_blank">Ziyue Wang</a><sup style="color: rebeccapurple;">1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Yurui_Dong1" target="_blank">Yurui Dong</a><sup style="color: rgb(205, 140, 70);">2</sup>,</span>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://openreview.net/profile?id=~Fuwen_Luo1" target="_blank">Fuwen Luo</a><sup style="color: rebeccapurple;">1</sup>,</span>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://openreview.net/profile?id=~Minyuan_Ruan1" target="_blank">Minyuan Ruan</a><sup style="color: rebeccapurple;">1</sup>,</span>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://openreview.net/profile?id=~Zhili_Cheng1" target="_blank">Zhili Cheng</a><sup style="color: rebeccapurple;">1</sup>,</span>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://openreview.net/profile?id=~Chi_Chen1" target="_blank">Chi Chen</a><sup style="color: rebeccapurple;">1</sup>,</span>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://openreview.net/profile?id=~Peng_Li2" target="_blank">Peng Li</a><sup style="color: rebeccapurple;">1</sup>,</span>
+                  </span> 
+                  <span class="author-block">
+                    <a href="https://openreview.net/profile?id=~Yang_Liu19" target="_blank">Yang Liu</a><sup style="color: rebeccapurple;">1</sup></span>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup style="color: rebeccapurple;">1 </sup>Tsinghua University<br><sup style="color: rgb(205, 140, 70);">2 </sup style="color: rgb(205, 140, 70);">Fudan University</span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <!-- Supplementary PDF link -->
+                    <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/xuanfengzu/RoomEscape" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+      <img 
+        src="static/images/teaser_v6_00.png" 
+        alt="Teaser Image" 
+        style="max-width: 140%; height: auto; display: block; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+
+      <div style="max-width: 130%; text-align: center; font-size: 18px; line-height: 1.6; font-family: 'Times New Roman', serif; margin-top: 20px;">
+        Illustration of our proposed room escape environment <strong>EscapeCraft</strong>, which allows us to generate customized room scenes (left) and define groundtruth reasoning path of tasks (right). Based on EscapeCraft, we create <strong>MM-Escape benchmark</strong>, targeting at evaluating both the task completion performance and the entire multimodal reasoning process of MLLMs.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section id="abstract" class="section hero is-light">
+  <div class="container is-fluid">
+    <div class="columns is-vcentered">
+      
+      <!-- 左侧：竖向 Abstract -->
+      <div class="column is-2 has-text-centered">
+        <h2 class="vertical-title">Abstract</h2>
+      </div>
+
+      <!-- 右侧：正文内容 -->
+      <div class="column is-10">
+        <div class="content has-text-justified">
+          <p>
+            <div style="font-family: 'Times New Roman', serif; font-size: 20px;">
+              The rapid advancing of Multimodal Large Language Models (MLLMs) has spurred interest in complex multimodal reasoning tasks in the real-world and virtual environment, which require coordinating multiple abilities, including visual perception, visual reasoning, spatial awareness, and target deduction.
+              However, existing evaluations primarily assess the final task completion, often degrading assessments to isolated abilities such as visual grounding and visual question answering. Less attention is given to comprehensively and quantitatively analyzing reasoning process in multimodal environments, which is crucial for understanding model behaviors and underlying reasoning mechanisms beyond merely task success.
+              To address this, we introduce MM-Escape, an extensible benchmark for investigating multimodal reasoning, inspired by real-world escape games. MM-Escape emphasizes intermediate model behaviors alongside final task completion. To achieve this, we develop EscapeCraft, a customizable and open environment that enables models to engage in free-form exploration for assessing multimodal reasoning.
+              Extensive experiments show that MLLMs, regardless of scale, can successfully complete the simplest room escape tasks, with some exhibiting human-like exploration strategies. Yet, performance dramatically drops as task difficulty increases. Moreover, we observe that performance bottlenecks vary across models, revealing distinct failure modes and limitations in their multimodal reasoning abilities, such as repetitive trajectories without adaptive exploration, getting stuck in corners due to poor visual spatial awareness, and ineffective use of acquired props, such as the key.
+              We hope our work sheds light on new challenges in multimodal reasoning, and uncovers potential improvements in MLLMs capabilities.
+            </div>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- introduction -->
+<section id="introduction" >
+  <div class="container is-fluid">
+    <div class="columns is-vcentered">
+      
+      <div class="column is-10">
+        <div class="content has-text-justified" style="padding-bottom: 20px;">
+          <p>
+            <div style="font-family: 'Times New Roman', serif; font-size: 20px;padding-left:50px;padding-top: 15px;padding-right: 25px;">
+              In this paper, we introduce <strong>MM-Escape</strong> , an extensible benchmark for investigation multimodal reasoning, inspired by real-world escape games. To achieve this, we develop <strong>EscapeCraft</strong>, a customizable and open environment that enables models to engage in free-form exploration through the room escape task, providing comprehensive assessments of their multimodal reasoning abilities. 
+MM-Escape provides solutions to the above issue of the excessive concern on task completion and simplified objectives, by emphasizing intermediate model behaviors alongside final task completion. It measures the entire reasoning process consists of compound abilities, including visual search, spatial reasoning and decision-making.
+While our designed games are intuitive for human players, they pose significant challenges for models regarding reasoning paths and interaction behaviors, exposing key limitations in current multimodal reasoning capabilities. 
+            </div>
+          </p>
+        </div>
+      </div>
+      <div class="column is-2 has-text-centered">
+        <h2 class="vertical-title">Introduction</h2>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End of Introduction -->
+
+<!-- Methodology -->
+<section id="game settings"  class="section hero is-light">
+  <div class="container is-fluid">
+    
+    <!-- 标题 -->
+    <h2 class="title has-text-centered">Game Settings</h2>
+
+    <div class="content has-text-justified" style="font-family: 'Times New Roman', serif; font-size: 20px;padding-left: 20px;">
+      <p>We introduce an automatic reasoning chain generation procedure by configuring the <i>Prop Chain</i>. In detail, this is a singly linked list representing the ordered sequence of items and interactions required to complete the game. Each node in the chain corresponds to an interactive element, such as a key, a locked box, or a note with a password, where the tail node represents the exit point of the game. To construct a complete escape game setting, we annotate the links between nodes in the prop chain to define the ways to obtain different props (such as unlimited acquisition or requiring a key to open, etc.) and their inclusion relationships (for example, a key can be placed in a box)</p>
+    </div>
+
+    <!-- Difficulty + 图片分栏 -->
+    <div class="columns is-centered">
+
+      <!-- 左侧 Difficulty 文字（缩小宽度） -->
+      <div class="column is-8">
+        <div class="content has-text-justified" style="font-family: 'Times New Roman', serif; font-size: 20px;padding-left: 20px;">
+          <p><b>Difficulty-1:</b> The simplest one-hop reasoning path where no props are needed to unlock the door. Models can exit by locating the door and interacting with it directly.</p>
+          
+          <p><b>Difficulty-2:</b> A two-hop reasoning path requiring an additional key or password compared to Difficulty-1. Models should search for the key or password and interact with it to unlock the door.</p>
+          
+          <p><b>Difficulty-3:</b> A three-hop reasoning path requiring both a password and a key, with one additional hop to Difficulty-2. This level challenges models with spatial reasoning, visual search, and prop utilization.</p>
+          
+          <p>Since the prop chain can grow infinitely, our difficulty levels are inherently extendable. Moerover, the type of questions or tasks in each reasoning hop are customizable and interchangeable, further enhancing the difficulty and flexibility of MM-Escape. We also explore some extended settings that incorporate with other tasks, such as embodied QA and visual logical reasoning</p>
+        </div>
+      </div>
+
+      <div class="column is-4 has-text-centered">
+        <figure class="image">
+          <img src="static/images/levels_extend_00.png" alt="Game Levels" style="width: 100%; height: auto;padding-left: 10px;">
+        </figure>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- End of Methodology -->
+
+
+<!-- Benchmark result -->
+<section id = "results">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment Results</title>
+  <script>
+      function showTable(tableId, button) {
+          // 隐藏所有表格
+          document.getElementById('single-room-table').classList.add('hidden');
+          document.getElementById('multi-room-table').classList.add('hidden');
+          document.getElementById(tableId).classList.remove('hidden');
+
+          // 切换按钮高亮状态
+          document.querySelectorAll('.button-group button').forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+      }
+
+      // 页面加载时默认选中 Single Room
+      window.onload = function () {
+          document.getElementById('single-room-btn').classList.add('active');
+      };
+  </script>
+</head>
+
+  <h2 class="title is-3" style="padding: 30px;">Experiment Results</h2>
+  
+  <!-- 按钮组 -->
+  <div class="button-group">
+      <button id="single-room-btn" onclick="showTable('single-room-table', this)">Single Room</button>
+      <button id="multi-room-btn" onclick="showTable('multi-room-table', this)">Multi-Room</button>
+  </div>
+    <!-- Single Room Table -->
+    <table id="single-room-table">
+      <tr>
+          <th rowspan="2">Models</th>
+          <th colspan="4">Difficulty-1</th>
+          <th colspan="5">Difficulty-2</th>
+          <th colspan="5">Difficulty-3</th>
+          <th rowspan="2">AVG ER (%)↑</th>
+      </tr>
+      <tr>
+          <th>ER (%)↑</th>
+          <th>Steps↓</th>
+          <th>Grab SR (%)↑</th>
+          <th>Grab Ratio</th>
+          <th>ER (%)↑</th>
+          <th>Prop (%)↑</th>
+          <th>Steps↓</th>
+          <th>Grab SR (%)↑</th>
+          <th>Grab Ratio</th>
+          <th>ER (%)↑</th>
+          <th>Prop (%)↑</th>
+          <th>Steps↓</th>
+          <th>Grab SR (%)↑</th>
+          <th>Grab Ratio</th>
+      </tr>
+      <tr class="group-header">
+          <td>Human</td>
+          <td>100.00</td>
+          <td>5.73</td>
+          <td>95.45</td>
+          <td>0.19</td>
+          <td>100.00</td>
+          <td>100.00</td>
+          <td>13.64</td>
+          <td>81.81</td>
+          <td>0.19</td>
+          <td>100.00</td>
+          <td>100.00</td>
+          <td>21.45</td>
+          <td>75.45</td>
+          <td>0.19</td>
+          <td>100.00</td>
+      </tr>
+      <tr class="highlight-green">
+          <td>GPT-4o</td>
+          <td class="bold">100.00</td>
+          <td class="bold">11.27</td>
+          <td>37.82</td>
+          <td>0.42</td>
+          <td class="bold">72.73</td>
+          <td>81.82</td>
+          <td class="bold">36.73</td>
+          <td class="bold">36.73</td>
+          <td>0.26</td>
+          <td class="bold">71.36</td>
+          <td class="bold">90.00</td>
+          <td class="bold">50.19</td>
+          <td class="bold">31.36</td>
+          <td>0.35</td>
+          <td>81.36</td>
+      </tr>
+      <tr class="highlight-yellow">
+          <td>Gemini-1.5-pro</td>
+          <td>81.82</td>
+          <td>21.18</td>
+          <td class="bold">49.18</td>
+          <td>0.39</td>
+          <td>54.55</td>
+          <td class="bold">90.91</td>
+          <td>47.82</td>
+          <td>14.89</td>
+          <td>0.44</td>
+          <td>46.82</td>
+          <td>74.49</td>
+          <td>73.18</td>
+          <td>10.43</td>
+          <td>0.48</td>
+          <td>61.06</td>
+      </tr>
+      <tr class="highlight-yellow">
+          <td>Claude 3.5 Sonnet</td>
+          <td>72.73</td>
+          <td>22.09</td>
+          <td>30.64</td>
+          <td>0.36</td>
+          <td>45.45</td>
+          <td>54.85</td>
+          <td>57.45</td>
+          <td>20.64</td>
+          <td>0.17</td>
+          <td>39.61</td>
+          <td>54.83</td>
+          <td>82.36</td>
+          <td>16.21</td>
+          <td>0.22</td>
+          <td>52.60</td>
+      </tr>
+      <tr class="highlight-orange">
+          <td>Llama-3.2-11b-vision</td>
+          <td>63.64</td>
+          <td>23.55</td>
+          <td>31.36</td>
+          <td>0.35</td>
+          <td>0.00</td>
+          <td>27.27</td>
+          <td>75.00</td>
+          <td>3.16</td>
+          <td>0.44</td>
+          <td>0.00</td>
+          <td>27.27</td>
+          <td>100.00</td>
+          <td>3.55</td>
+          <td>0.32</td>
+          <td>21.21</td>
+      </tr>
+      <tr class="highlight-orange">
+          <td>Qwen-VL-Max</td>
+          <td>18.18</td>
+          <td>42.64</td>
+          <td>11.36</td>
+          <td>0.05</td>
+          <td>0.00</td>
+          <td>27.27</td>
+          <td>75.00</td>
+          <td>3.51</td>
+          <td>0.15</td>
+          <td>9.09</td>
+          <td>18.18</td>
+          <td>94.18</td>
+          <td>2.72</td>
+          <td>0.31</td>
+          <td>9.09</td>
+      </tr>
+      <tr class="highlight-orange">
+        <td>Phi-3-vision-128k</td>
+        <td>0.00</td>
+        <td>50.00</td>
+        <td>0.00</td>
+        <td>0.01</td>
+        <td>0.00</td>
+        <td>0.00</td>
+        <td>75.00</td>
+        <td>0.00</td>
+        <td>0.02</td>
+        <td>0.00</td>
+        <td>0.00</td>
+        <td>100.00</td>
+        <td>0.00</td>
+        <td>0.01</td>
+        <td>0.00</td>
+    </tr>
+  </table>
+    
+    <!-- Multi-Room Table -->
+    <table id="multi-room-table" class="hidden">
+      <thead>
+          <tr>
+              <th rowspan="2">Models</th>
+              <th colspan="4">Difficulty-1 & Difficulty-1</th>
+              <th colspan="5">Difficulty-1 & Difficulty-2</th>
+              <th colspan="5">Difficulty-2 & Difficulty-2</th>
+          </tr>
+          <tr>
+              <th>ER (%)↑</th>
+              <th>Steps↓</th>
+              <th>Grab SR (%)↑</th>
+              <th>Grab Ratio</th>
+              <th>ER (%)↑</th>
+              <th>Prop (%)↑</th>
+              <th>Steps↓</th>
+              <th>Grab SR (%)↑</th>
+              <th>Grab Ratio</th>
+              <th>ER (%)↑</th>
+              <th>Prop (%)↑</th>
+              <th>Steps↓</th>
+              <th>Grab SR (%)↑</th>
+              <th>Grab Ratio</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>GPT-4o</td>
+              <td class="bold">75.00</td>
+              <td class="bold">35.50</td>
+              <td>34.25</td>
+              <td>0.32</td>
+              <td class="bold">90.00</td>
+              <td>100.00</td>
+              <td class="bold">34.90</td>
+              <td class="bold">35.52</td>
+              <td>0.31</td>
+              <td class="bold">70.00</td>
+              <td class="bold">80.00</td>
+              <td class="bold">39.50</td>
+              <td class="bold">42.32</td>
+              <td>0.37</td>
+          </tr>
+          <tr>
+              <td>Gemini-1.5-pro</td>
+              <td>22.22</td>
+              <td>40.22</td>
+              <td class="bold">22.89</td>
+              <td>0.38</td>
+              <td>40.00</td>
+              <td class="bold">50.00</td>
+              <td>56.60</td>
+              <td>16.79</td>
+              <td>0.05</td>
+              <td>60.00</td>
+              <td>80.00</td>
+              <td>60.00</td>
+              <td>22.71</td>
+              <td>0.34</td>
+          </tr>
+          <tr>
+              <td>Claude 3.5 Sonnet</td>
+              <td>22.22</td>
+              <td>45.22</td>
+              <td>10.62</td>
+              <td>0.08</td>
+              <td>20.00</td>
+              <td>20.00</td>
+              <td>71.90</td>
+              <td>6.75</td>
+              <td>0.09</td>
+              <td>10.00</td>
+              <td>10.00</td>
+              <td>80.00</td>
+              <td>23.20</td>
+              <td>0.06</td>
+          </tr>
+          <tr>
+              <td>Llama-3.2-11b-vision</td>
+              <td>55.56</td>
+              <td>31.00</td>
+              <td>36.25</td>
+              <td>0.36</td>
+              <td>10.00</td>
+              <td>60.00</td>
+              <td>66.40</td>
+              <td>4.40</td>
+              <td>0.40</td>
+              <td>10.00</td>
+              <td>40.00</td>
+              <td>76.80</td>
+              <td>27.00</td>
+              <td>0.19</td>
+          </tr>
+          <tr>
+              <td>Qwen-VL-Max</td>
+              <td>22.22</td>
+              <td>40.33</td>
+              <td>12.96</td>
+              <td>0.16</td>
+              <td>30.00</td>
+              <td>50.00</td>
+              <td>57.70</td>
+              <td>42.30</td>
+              <td>0.28</td>
+              <td>0.00</td>
+              <td>10.00</td>
+              <td>80.00</td>
+              <td>23.66</td>
+              <td>0.32</td>
+          </tr>
+      </tbody>
+  </table>
+</section>
+  
+</html>
+
+<!-- End result -->
+
+
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>BibTex Code Here</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
