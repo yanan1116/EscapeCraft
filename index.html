@@ -52,6 +52,7 @@
       <a href="#abstract" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Abstract</a>
       <a href="#introduction" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Introduction</a>
       <a href="#game settings" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Settings</a>
+      <a href="#analysis" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Analysis</a>
       <a href="#results" class="button is-small is-light" style = "font-size: 18px; font-family: 'Google Sans', sans-serif;">Results</a>
 
     </div>
@@ -97,7 +98,7 @@
                     <div class="publication-links">
                          <!-- Arxiv PDF link -->
                       <span class="link-block">
-                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        <a href="https://arxiv.org/pdf/2503.10042" target="_blank"
                         class="external-link button is-normal is-rounded is-dark">
                         <span class="icon">
                           <i class="fas fa-file-pdf"></i>
@@ -106,7 +107,7 @@
                       </a>
                     </span>
 
-                    <!-- Supplementary PDF link -->
+                    <!-- Supplementary PDF link
                     <span class="link-block">
                       <a href="static/pdfs/supplementary_material.pdf" target="_blank"
                       class="external-link button is-normal is-rounded is-dark">
@@ -115,11 +116,11 @@
                       </span>
                       <span>Supplementary</span>
                     </a>
-                  </span>
+                  </span> -->
 
                   <!-- Github link -->
                   <span class="link-block">
-                    <a href="https://github.com/xuanfengzu/RoomEscape" target="_blank"
+                    <a href="https://github.com/THUNLP-MT/EscapeCraft" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fab fa-github"></i>
@@ -130,7 +131,7 @@
 
                 <!-- ArXiv abstract Link -->
                 <span class="link-block">
-                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                  <a href="https://arxiv.org/abs/2503.10042" target="_blank"
                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
@@ -206,9 +207,9 @@
         <div class="content has-text-justified" style="padding-bottom: 20px;">
           <p>
             <div style="font-family: 'Times New Roman', serif; font-size: 20px;padding-left:50px;padding-top: 15px;padding-right: 25px;">
-              In this paper, we introduce <strong>MM-Escape</strong> , an extensible benchmark for investigation multimodal reasoning, inspired by real-world escape games. To achieve this, we develop <strong>EscapeCraft</strong>, a customizable and open environment that enables models to engage in free-form exploration through the room escape task, providing comprehensive assessments of their multimodal reasoning abilities. 
-MM-Escape provides solutions to the above issue of the excessive concern on task completion and simplified objectives, by emphasizing intermediate model behaviors alongside final task completion. It measures the entire reasoning process consists of compound abilities, including visual search, spatial reasoning and decision-making.
-While our designed games are intuitive for human players, they pose significant challenges for models regarding reasoning paths and interaction behaviors, exposing key limitations in current multimodal reasoning capabilities. 
+              The rapid development of Large Language Models (LLMs) and Multimodal Large Language Models (MLLMs) has driven advancements in various applications, requiring strong multimodal reasoning abilities such as visual perception, spatial awareness, and tool utilization. However, existing evaluation methods primarily focus on task completion rather than analyzing the entire reasoning process, limiting insights into model capabilities.<br>
+              To address this, we introduce <strong>MM-Escape</strong>, a benchmark inspired by real-world escape games, designed to assess complex multimodal reasoning. At its core, we develop <strong>EscapeCraft</strong>, a customizable open environment that enables models to engage in free-form exploration through room escape tasks. This allows for a comprehensive evaluation of reasoning abilities beyond simple task completion, focusing on intermediate behaviors and decision-making.<br>
+              Our findings reveal that while MLLMs show promising reasoning abilities, performance drops significantly as task complexity increases, exposing distinct failure patterns. These insights emphasize the need for more comprehensive analysis and improvements in multimodal reasoning.
             </div>
           </p>
         </div>
@@ -261,6 +262,67 @@ While our designed games are intuitive for human players, they pose significant 
 
 <!-- End of Methodology -->
 
+<!-- beginning of analysis -->
+<section id = "analysis">
+  <div class="container is-fluid">
+    <h2 class="title is-3" style="padding: 30px;">Analysis</h2>
+    <div class="columns is-centered">
+      <div class="column is-10">
+        <div class="content has-text-justified" style="font-family: 'Times New Roman', serif; font-size: 20px;padding-left: 20px;">
+          <p style="border: 2px dashed black; border-radius: 10px; padding: 10px;">
+            <strong>Takeaways</strong>
+            <br><i>Distinct Human-Like Behavioral Patterns:</i> Models exhibit unique behaviors in the escape task. Gemini tends to remain in a fixed location at the start, scanning its surroundings before acting, while GPT-4o first observes a wider range for a more global understanding.
+            <br><i>Diverse Observation Strategies: </i>Gemini frequently adopts a downward-facing view to inspect objects like tables and chairs, whereas GPT-4o predominantly relies on a front-facing view.
+            <br><i>Common Failure Modes:</i> Models struggle with movement and interaction failures. GPT-4o tends to repeat trajectories, while Gemini and Claude get stuck in confined areas. Phi-3 and Qwen-VL fail at action combinations, leading to imprecise object interactions.
+            <br><i>Adherence to Long-Term Goals: </i>Most models focus on locating the exit and key objects, but Phi-3 consistently fails to recognize doors, unlike other models that engage with doors upon detection.
+        </p>
+            <strong>Analysis of Entire Path</strong><br>
+            The analysis focuses on three key aspects: (1) the number of steps required to obtain core props, (2) steps needed to exit after acquiring the key or password, and (3) the relationship between grab success rate (GSR) and escape success.
+            Efficiency in Obtaining Key Props: GPT-4o demonstrates the best performance in locating and acquiring essential props, followed by Gemini. Claude performs well in higher difficulty levels but with a lower escape rate.
+            Efficiency in Exiting: Gemini performs well in moderate difficulty but struggles in complex environments, where GPT-4o benefits from prior memory and spatial understanding, leading to more efficient escapes.
+            Grab Success Rate (GSR) and Escape Success: A higher GSR correlates with better escape performance. GPT-4o and Claude 3.5 maintain relatively stable GSRs, while Qwen and Llama struggle due to weaker environmental perception and interaction capabilities.<br>
+            <strong>Extensibility of EscapeCraft</strong><br>
+            An extended case study evaluates model adaptability to different room configurations. In a scenario where the password is displayed as a numerical pattern instead of written text:
+            GPT-4o quickly recognizes and uses it when the pattern is near the door but struggles when the pattern is farther away, revealing limitations in long-term and spatial reasoning.
+            Gemini fails to recognize the pattern entirely, instead resorting to exhaustive room searches.
+            This highlights the importance of enhancing models' ability to interpret environmental cues dynamically.<br>
+            <strong>Post-game Debriefing</strong><br>
+            After escaping, models are tasked with recalling and reconstructing their escape process. Only GPT-4o and Gemini-1.5-Pro are evaluated due to their higher escape rates. Findings show that:
+            Models prioritize key actions (e.g., obtaining the password) but neglect background context, suggesting a trade-off between efficiency and holistic understanding.
+            Future improvements should focus on enhancing memory and reasoning abilities to better capture contextual details beyond task completion.</p>
+          </div>
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item">
+             <!-- Your image here -->
+             <img src="static\images\example_v3_00.png" alt="MY ALT TEXT"/>
+             <h2 class="subtitle has-text-centered" style="font-size: 15px;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;padding-top: 18px;text-align: left;">
+              An example of success escape path from Gemini-1.5-pro. For the first four steps, it rotates, without moving, to observe the
+              surroundings, and then starts moving towards the direct on the observed tables in the following steps. For step 5 and 6, we zoom in to the
+              key to make it clearer. The key is distorted because the view of model is tilting downwards to observe objects on the table. From step 10
+              to 14, the model is already close to the door, and is slowly rotating and tilting to locate the door.
+             </h2>
+           </div>
+           <div class="item">
+             <!-- Your image here -->
+             <img src="static\images\analysis-result_v3_00.png" alt="MY ALT TEXT"/>
+             <h2 class="subtitle has-text-centered" style="font-size: 15px;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;padding-top: 18px;text-align: left;">
+              Analysis on the grabbing behaviors with respect to the escape rate and the visibility of the exit at initial location.
+             </h2>
+           </div>
+           <div class="item">
+             <!-- Your image here -->
+             <img src="static\images\finalcase_00.png" alt="MY ALT TEXT"/>
+             <h2 class="subtitle has-text-centered" style="font-size: 15px;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;padding-top: 18px;text-align: left;">
+              The extended scenario where the required password is displayed via a numerical pattern on the wall, rather than explicitly written
+              on notes. GPT-4o completes reading it at once and exits within five steps, while Gemini struggles to repetitively search the room. Moving
+              the pattern away from the door further challenges GPT-4o, leading to a failure of escaping.
+            </h2>
+          </div>
+       </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Benchmark result -->
 <section id = "results">
@@ -573,7 +635,15 @@ While our designed games are intuitive for human players, they pose significant 
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>BibTex Code Here</code></pre>
+      <pre style = "text-align: left;"><code>@misc{wang2025multimodallargelanguagemodels,
+      title={How Do Multimodal Large Language Models Handle Complex Multimodal Reasoning? Placing Them in An Extensible Escape Game}, 
+      author={Ziyue Wang and Yurui Dong and Fuwen Luo and Minyuan Ruan and Zhili Cheng and Chi Chen and Peng Li and Yang Liu},
+      year={2025},
+      eprint={2503.10042},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2503.10042}, 
+  }</code></pre>
     </div>
 </section>
 <!--End BibTex citation -->
