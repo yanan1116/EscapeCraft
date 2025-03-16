@@ -1,0 +1,52 @@
+{
+    "room": {
+        "exit": {
+            "type": "key",
+            "unlock_item_id": "key_1"
+        },
+        "items": [
+            {
+                "id": "box_1",
+                "type": "box",
+                "unlock_method": {
+                    "type": "password",
+                    "id": "password_1"
+                },
+                "contents": [
+                    "key_1",
+                    "note_2"
+                ],
+                "show": true
+            },
+            {
+                "id": "key_1",
+                "type": "key",
+                "use": "box_1",
+                "show": false
+            },
+            {
+                "id": "note_1",
+                "type": "paper",
+                "contents": ["password_1"],
+                "show": true
+            },
+            {
+                "id": "note_2",
+                "type": "paper",
+                "contents": [
+                    {
+                        "type": "story",
+                        "content": "Researcher A's Diary - Last Article\n\nDate: April 13, 20XX\n\nToday is my third year in this underground base... No, it should be the fourth year, right? I have long lost my sense of time. The air is still humid, the generator occasionally fails, and every repair makes me tremble with nervousness. I know that all of us are \"living things\" trapped here, not only prisoners of the flesh, but also slaves of those data and the flow of consciousness.\n\nI remember the day when the experiment failed very clearly. The doctor firmly believed that he could do it - upload a person's complete consciousness to the virtual network, so that humans can break free from the constraints of the flesh and live forever. All of us were full of expectations at that moment. However, the system suddenly went out of control. The uploaded consciousness became confused, and the brains of many experimental subjects were blank, and their memories seemed to be torn apart. That system, the system called \"ARC-21\"... What on earth has it become?\n\nSince the accident, the institute has been completely blocked, and we have cut off all contact with the outside world. To be honest, I don't know whether it was an intentional blockade or the institute itself has become a self-sustaining cage. Doctor, is he still alive? He kept saying that he had succeeded, but I never saw him walk out of the door of the laboratory...\n\nThe number of people in the base gradually decreased, some disappeared, and some... you could say they were \"virtualized\". Their consciousness seemed to still exist in the system, but their bodies never woke up again. On those cold screens, their last fragments of memory flickered. And we \"survivors\" are waiting for some kind of end every day. Whether to escape or become a part of the system completely, I don't know. I only know that I can't go on like this...\n\nRecently, my dreams have begun to blur with reality. I heard someone whispering that the final truth is hidden in the core of the base. Maybe going there can free me and save all the souls trapped here.\n\nTomorrow, I will go to the core area - that is the starting point and the end of everything.\n\n——Researcher A"
+                    }
+                ],
+                "show": false
+            },
+            {
+                "id": "password_1",
+                "type": "password",
+                "show": false
+            }
+        ]
+    },
+    "story": "The story takes place in an abandoned underground research institute. This institute was originally a secret scientific research base, specializing in genetic modification and consciousness transmission experiments, trying to upload human consciousness to the virtual space. However, an experimental accident many years ago led to the blockade of the institute, and all scientists and experimental subjects were trapped inside. After the experiment failed, the underground research institute gradually lost contact with the outside world and became a forbidden place unknown to anyone. Only those who know the inside story know that there is still \"something\" running here, guarding unknown secrets."
+}

@@ -1,0 +1,54 @@
+{
+    "room": {
+        "exit": {
+            "type": "password",
+            "unlock_item_id": "password_1"
+        },
+        "items": [
+            {
+                "id": "box_1",
+                "type": "box",
+                "unlock_method": {
+                    "type": "key",
+                    "id": "key_1"
+                },
+                "contents": [
+                    "note_1",
+                    "note_2"
+                ],
+                "show": true
+            },
+            {
+                "id": "key_1",
+                "type": "key",
+                "use": "box_1",
+                "show": true
+            },
+            {
+                "id": "note_1",
+                "type": "paper",
+                "contents": ["password_1"],
+                "show": false
+            },
+            {
+                "id": "note_2",
+                "type": "paper",
+                "contents": [
+                    {
+                        "type": "story",
+                        "content": "Journal of the Mansion's Last Resident\n\nDate: October 12, 19XX\n\nFor the past few months, I have noticed strange occurrences in this house. Things move on their own, doors creak open and closed in the dead of night, and I hear whispers that seem to come from nowhere. I had thought that I was simply imagining things due to the isolation, but now... now I know better.\n\nThe curse, I fear, is real. The previous owners were occultists who sealed something dark and ancient in the walls. I cannot leave. The house won't let me. Whoever enters this mansion is trapped, and the curse feeds on their fear. I've tried everything to escape, but nothing works.\n\nI write this now, hoping that someone will read it and understand. Perhaps, if you solve the mystery, the curse can be broken. Good luck."
+                      }
+                      
+                ],
+                "show": false
+            },
+            {
+                "id": "password_1",
+                "type": "password",
+                "show": false
+            }
+        ]
+    },
+    "story": "The story unfolds in a mansion that has long been abandoned. Years ago, the mansion was a hub for occult practices. The last owner, a reclusive scholar, tried to uncover the secrets of the house, but the curse claimed him. Now, the mansion is a forbidden place, known only to a few. Some claim that something still stirs within its walls, watching, waiting for the next victim."
+
+}

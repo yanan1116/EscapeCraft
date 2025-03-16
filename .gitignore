@@ -1,0 +1,11 @@
+**/__pycache__/
+**/.legent/
+
+failed_objects.json
+last_scene.json
+
+*.pyc
+*.pyo
+*.pyd
+*.log
+.DS_Store
