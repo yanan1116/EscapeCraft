@@ -46,7 +46,7 @@ src/
 ```
 Please refer to [LEGENT](https://docs.legent.ai/documentation/getting_started/installation/) if you encounter any issues.
 
-## Configs of EscapeCraft
+## Configuration of EscapeCraft
 
 Our EscapeCraft is extensible and can be customized by modifying configs in `src/config.py` according to your requirements. Please try our pre-defined settings or customize your own settings follow the instructions below:
 
@@ -61,20 +61,20 @@ Our EscapeCraft is extensible and can be customized by modifying configs in `src
    - For the _level file_, users should define key props and way to get out (e.g. unlocking the door with the key, or unlocking the door using password)
    - For the _scene file_, users should specify object models used in the scene. If the objects are not included in our repo, please download the required object models and place them under the `prefabs/` dir. 
 
-#### Generate a customized scene
+### Generate a customized scene
 ```bash
 cd src/scripts
 python generate_scene.py --setting_path path/to/levels
 ```
 Then the scene will be saved automatically in `levels/level_name/`.
 
-#### Load a customized scene to explore manually
+### Load a customized scene to explore manually
 ```bash
 cd src/scripts
 python load_scene.py --scene_path path/to/levels
 ```
 
-#### Run the game
+### Run the game
 The options for the evalution are listed as following:
 ```bash
 usage: main.py [-h] [--level LEVEL] [--model MODEL] [--room_number ROOM_NUMBER] [--record_path RECORD_PATH] [--history_type HISTORY_TYPE] [--hint]
@@ -110,7 +110,7 @@ python main.py --level level3 --room_number 3 --model record --history_type full
 This is for visualization of a complete escaping history, or to restore a unfinished game (continue running).
 
 
-#### Story Recovery & MultiRoom & Extensions
+### Story Recovery & MultiRoom & Extensions
 
 > coming soon!
 
