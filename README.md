@@ -21,9 +21,9 @@
 <img src="./figures/example.png" alt="Image">
 </p>
 
-## Usage
-### Installation
-You can use conda to create a new environment and install the required packages:
+## Installation
+1. Install required packages of EscapeCraft as follows:
+   
 ```bash
 git clone https://github.com/THUNLP-MT/EscapeCraft.git
 cd EscapeCraft
@@ -31,8 +31,9 @@ conda create -n mm-escape python=3.11
 conda activate mm-escape
 pip install -r requirements.txt
 ```
-
-Then you should download the legent client and env data from [hugging face](https://huggingface.co/LEGENT/LEGENT-environment-Alpha/tree/main) or [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/d/9976c807e6e04e069377/). After downloading, extract and unzip the file to create the following file structure:
+2. Download Legent client and environment
+   
+For detailed instructions to install Legent, please follow [hugging face](https://huggingface.co/LEGENT/LEGENT-environment-Alpha/tree/main) or [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/d/9976c807e6e04e069377/). After downloading the client and environment, please unzip the file to create the following file structure:
 
 ```bash
 src/
@@ -43,29 +44,37 @@ src/
         └── env_data/
             └── env_data-<version>
 ```
-If you have any problem, please refer to [LEGENT](https://docs.legent.ai/documentation/getting_started/installation/).
+Please refer to [LEGENT](https://docs.legent.ai/documentation/getting_started/installation/) if you encounter any issues.
 
-### Configs
-Our EscapeCraft is extensible and can be customized simply by changing the configs in `src/config.py`. All the configs are commented and you can easily modify them to your needs.
+## Configs of EscapeCraft
 
-### Levels
-The levels we provide are in `levels/`. You can refer to the structure of our json file and the way we generate the level proposed in our paper to generate your own level data, which can make the game more challenging and complex.
+Our EscapeCraft is extensible and can be customized by modifying configs in `src/config.py` according to your requirements. Please try our pre-defined settings or customize your own settings follow the instructions below:
 
-### Use
-#### Generate a scene
+### Settings of Game Difficulty
+
+1. For direct usage:
+   - The MM-Escape benchmark we used in our paper are provided in the `levels/` dir. 
+   - Users can directly play with our pre-defined settings.
+
+2. For customization:
+   - Please prepare two types of files: the _level file_ and the _scene file_. Users can refer to the structure of our json files (in `levels/` dir) to config your own data.
+   - For the _level file_, users should define key props and way to get out (e.g. unlocking the door with the key, or unlocking the door using password)
+   - For the _scene file_, users should specify object models used in the scene. If the objects are not included in our repo, please download the required object models and place them under the `prefabs/` dir. 
+
+#### Generate a customized scene
 ```bash
 cd src/scripts
 python generate_scene.py --setting_path path/to/levels
 ```
 Then the scene will be saved automatically in `levels/level_name/`.
 
-#### Load a scene to explore yourself
+#### Load a customized scene to explore manually
 ```bash
 cd src/scripts
 python load_scene.py --scene_path path/to/levels
 ```
 
-#### Run evaluation
+#### Run the game
 The options for the evalution are listed as following:
 ```bash
 usage: main.py [-h] [--level LEVEL] [--model MODEL] [--room_number ROOM_NUMBER] [--record_path RECORD_PATH] [--history_type HISTORY_TYPE] [--hint]
@@ -87,18 +96,18 @@ options:
   --max_retry MAX_RETRY
                         max retry times
 ```
-For example, you can load the third scene generated for level3 and evaluate the model `gpt-4o` with the history type `full`:
+For example, you can load the third scene generated for level3 (aka "Diffuculty-3" in our paper) and evaluate the model `gpt-4o` with the history type `full`:
 ```bash
 cd src
 python main.py --level level3 --room_number 3 --model gpt-4o --history_type full
 ```
 
-If you want load a record, you can use the following command:
+To load a recorded history, please follow this command:
 ```bash
 cd src
 python main.py --level level3 --room_number 3 --model record --history_type full --record_path path/to/record
 ```
-This will start a game re-playing the record.
+This is for visualization of a complete escaping history, or to restore a unfinished game (continue running).
 
 
 #### Story Recovery & MultiRoom & Extensions
