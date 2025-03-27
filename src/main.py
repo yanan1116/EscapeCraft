@@ -58,8 +58,8 @@ agent = AgentPlayer(
     history_type=history_type,
     max_retry=max_retry,
 )
-scene_path = f"../levels/{level}/{room_number}.json"
-level_data = f"../{level}.json"
+scene_path = f"../levels/scene_data/{level}/{room_number}.json"
+level_data = f"../levels/{level}.json"
 
 if args.record_path is not None:
     game = Game(
