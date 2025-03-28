@@ -25,7 +25,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <title>Roomescape</title>
+  <title>MM-Escape</title>
   <link rel="icon" type="image/x-icon" href="static\images\escape.png">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
   rel="stylesheet">
@@ -147,6 +147,11 @@
   </div>
 </section>
 
+<video width="640" height="360" controls style="margin-bottom: 40px;">
+  <source src="static/video/example.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 
 <section class="hero teaser">
   <div class="container is-max-desktop">
@@ -226,17 +231,17 @@
 <section id="game settings"  class="section hero is-light">
   <div class="container is-fluid">
     
-    <!-- title -->
+    <!-- 标题 -->
     <h2 class="title has-text-centered">Game Settings</h2>
 
     <div class="content has-text-justified" style="font-family: 'Times New Roman', serif; font-size: 20px;padding-left: 20px;">
       <p>We introduce an automatic reasoning chain generation procedure by configuring the <i>Prop Chain</i>. In detail, this is a singly linked list representing the ordered sequence of items and interactions required to complete the game. Each node in the chain corresponds to an interactive element, such as a key, a locked box, or a note with a password, where the tail node represents the exit point of the game. To construct a complete escape game setting, we annotate the links between nodes in the prop chain to define the ways to obtain different props (such as unlimited acquisition or requiring a key to open, etc.) and their inclusion relationships (for example, a key can be placed in a box)</p>
     </div>
 
-    <!-- Difficulty + image columns -->
+    <!-- Difficulty + 图片分栏 -->
     <div class="columns is-centered">
 
-      <!-- left: Difficulty  -->
+      <!-- 左侧 Difficulty 文字（缩小宽度） -->
       <div class="column is-8">
         <div class="content has-text-justified" style="font-family: 'Times New Roman', serif; font-size: 20px;padding-left: 20px;">
           <p><b>Difficulty-1:</b> The simplest one-hop reasoning path where no props are needed to unlock the door. Models can exit by locating the door and interacting with it directly.</p>
@@ -271,10 +276,10 @@
         <div class="content has-text-justified" style="font-family: 'Times New Roman', serif; font-size: 20px;padding-left: 20px;">
           <p style="border: 2px dashed black; border-radius: 10px; padding: 10px;">
             <strong>Takeaways</strong>
-            <br><i>Distinct Human-Like Behavioral Patterns:</i> Models exhibit unique behaviors in the escape task. Gemini tends to remain in a fixed location at the start, scanning its surroundings before acting, while GPT-4o first observes a wider range for a more global understanding.
-            <br><i>Diverse Observation Strategies: </i>Gemini frequently adopts a downward-facing view to inspect objects like tables and chairs, whereas GPT-4o predominantly relies on a front-facing view.
-            <br><i>Common Failure Modes:</i> Models struggle with movement and interaction failures. GPT-4o tends to repeat trajectories, while Gemini and Claude get stuck in confined areas. Phi-3 and Qwen-VL fail at action combinations, leading to imprecise object interactions.
-            <br><i>Adherence to Long-Term Goals: </i>Most models focus on locating the exit and key objects, but Phi-3 consistently fails to recognize doors, unlike other models that engage with doors upon detection.
+            <br><strong>&bull; </strong><i>Distinct Human-Like Behavioral Patterns:</i> Models exhibit unique behaviors in the escape task. Gemini tends to remain in a fixed location at the start, scanning its surroundings before acting, while GPT-4o first observes a wider range for a more global understanding.
+            <br><strong>&bull; </strong><i>Diverse Observation Strategies: </i>Gemini frequently adopts a downward-facing view to inspect objects like tables and chairs, whereas GPT-4o predominantly relies on a front-facing view.
+            <br><strong>&bull; </strong><i>Common Failure Modes:</i> Models struggle with movement and interaction failures. GPT-4o tends to repeat trajectories, while Gemini and Claude get stuck in confined areas. Phi-3 and Qwen-VL fail at action combinations, leading to imprecise object interactions.
+            <br><strong>&bull; </strong><i>Adherence to Long-Term Goals: </i>Most models focus on locating the exit and key objects, but Phi-3 consistently fails to recognize doors, unlike other models that engage with doors upon detection.
         </p>
             <strong>Analysis of Entire Path</strong><br>
             The analysis focuses on three key aspects: (1) the number of steps required to obtain core props, (2) steps needed to exit after acquiring the key or password, and (3) the relationship between grab success rate (GSR) and escape success.
