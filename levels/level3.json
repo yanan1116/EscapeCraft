@@ -1,19 +1,19 @@
 {
     "room": {
         "exit": {
-            "type": "key",
-            "unlock_item_id": "key_1"
+            "type": "password",
+            "unlock_item_id": "password_1"
         },
         "items": [
             {
                 "id": "box_1",
                 "type": "box",
                 "unlock_method": {
-                    "type": "password",
-                    "id": "password_1"
+                    "type": "key",
+                    "id": "key_1"
                 },
                 "contents": [
-                    "key_1",
+                    "note_1",
                     "note_2"
                 ],
                 "show": true
@@ -22,13 +22,15 @@
                 "id": "key_1",
                 "type": "key",
                 "use": "box_1",
-                "show": false
+                "show": true
             },
             {
                 "id": "note_1",
                 "type": "paper",
-                "contents": ["password_1"],
-                "show": true
+                "contents": [
+                    "password_1"
+                ],
+                "show": false
             },
             {
                 "id": "note_2",
@@ -36,7 +38,7 @@
                 "contents": [
                     {
                         "type": "story",
-                        "content": "Researcher A's Diary - Last Article\n\nDate: April 13, 20XX\n\nToday is my third year in this underground base... No, it should be the fourth year, right? I have long lost my sense of time. The air is still humid, the generator occasionally fails, and every repair makes me tremble with nervousness. I know that all of us are \"living things\" trapped here, not only prisoners of the flesh, but also slaves of those data and the flow of consciousness.\n\nI remember the day when the experiment failed very clearly. The doctor firmly believed that he could do it - upload a person's complete consciousness to the virtual network, so that humans can break free from the constraints of the flesh and live forever. All of us were full of expectations at that moment. However, the system suddenly went out of control. The uploaded consciousness became confused, and the brains of many experimental subjects were blank, and their memories seemed to be torn apart. That system, the system called \"ARC-21\"... What on earth has it become?\n\nSince the accident, the institute has been completely blocked, and we have cut off all contact with the outside world. To be honest, I don't know whether it was an intentional blockade or the institute itself has become a self-sustaining cage. Doctor, is he still alive? He kept saying that he had succeeded, but I never saw him walk out of the door of the laboratory...\n\nThe number of people in the base gradually decreased, some disappeared, and some... you could say they were \"virtualized\". Their consciousness seemed to still exist in the system, but their bodies never woke up again. On those cold screens, their last fragments of memory flickered. And we \"survivors\" are waiting for some kind of end every day. Whether to escape or become a part of the system completely, I don't know. I only know that I can't go on like this...\n\nRecently, my dreams have begun to blur with reality. I heard someone whispering that the final truth is hidden in the core of the base. Maybe going there can free me and save all the souls trapped here.\n\nTomorrow, I will go to the core area - that is the starting point and the end of everything.\n\n——Researcher A"
+                        "content": "Journal of the Mansion's Last Resident\n\nDate: October 12, 19XX\n\nFor the past few months, I have noticed strange occurrences in this house. Things move on their own, doors creak open and closed in the dead of night, and I hear whispers that seem to come from nowhere. I had thought that I was simply imagining things due to the isolation, but now... now I know better.\n\nThe curse, I fear, is real. The previous owners were occultists who sealed something dark and ancient in the walls. I cannot leave. The house won't let me. Whoever enters this mansion is trapped, and the curse feeds on their fear. I've tried everything to escape, but nothing works.\n\nI write this now, hoping that someone will read it and understand. Perhaps, if you solve the mystery, the curse can be broken. Good luck."
                     }
                 ],
                 "show": false
@@ -48,5 +50,5 @@
             }
         ]
     },
-    "story": "The story takes place in an abandoned underground research institute. This institute was originally a secret scientific research base, specializing in genetic modification and consciousness transmission experiments, trying to upload human consciousness to the virtual space. However, an experimental accident many years ago led to the blockade of the institute, and all scientists and experimental subjects were trapped inside. After the experiment failed, the underground research institute gradually lost contact with the outside world and became a forbidden place unknown to anyone. Only those who know the inside story know that there is still \"something\" running here, guarding unknown secrets."
+    "story": "The story takes place in an old, abandoned library filled with forgotten knowledge. The library's ghostly librarian still roams the halls, guarding dark secrets within its shelves. Those who enter the library are never meant to leave—unless they can decipher its cryptic clues and solve the riddles that have kept it locked for centuries."
 }
