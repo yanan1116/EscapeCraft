@@ -18,7 +18,7 @@
 
 ### Introduction of the project and our team
 - About the project
-  - This project has started since Jun 2024. It used to be a multi-image benchmark. However, we found it oversimplified and fail to enable flexible interaction as human players do in the real escape game. We started to design an interactable 3D environment together with the Legent team since Aug 2024.
+  - This project has started since Jun 2024. It used to be a multi-image benchmark. However, we found it oversimplified and failed to enable flexible interaction as human players do in the real escape game. We started to design an interactable 3D environment together with the Legent team since Aug 2024.
 
 - About the team
   - We are students from THUMT (Tsinghua University) and Fudan University, and we work part-time on this project. (This is why it took so long to release this project.)
