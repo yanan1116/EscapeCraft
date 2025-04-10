@@ -21,7 +21,7 @@
   - This project has started since Jun 2024. It used to be a multi-image benchmark. However, we found it oversimplified and failed to enable flexible interaction as human players do in the real escape game. We started to design an interactable 3D environment together with the Legent team since Aug 2024.
 
 - About the team
-  - We are students from THUMT (Tsinghua University) and Fudan University, and we work part-time on this project. (This is why it took so long to release this project.)
+  - We are students from THUMT & THUNLP (Tsinghua University) and Fudan University, and we work part-time on this project. (This is why it took so long to release this project.😣)
   - As experienced escape game players, we are curious about how MLLMs would perform in such an environment.
   - We are currently planning a second version. If you are insterested in our project, feel free to contact us. ([✉️email](mailto:w.ziyue1010@gmail.com))
   - We live to enjoy life, not just to work.
