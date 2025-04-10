@@ -12,7 +12,7 @@ def parse_args():
     parser.add_argument("--level", type=str, help="level name")
     parser.add_argument("--model", type=str, help="model name")
     parser.add_argument(
-        "--room_number", type=int, default=1, help="room number of the level generated"
+        "--room_id", type=int, default=1, help="room_id of the specified level"
     )
     parser.add_argument(
         "--record_path", type=str, default=None, help="record path to load"
@@ -36,7 +36,7 @@ args = parse_args()
 
 level = args.level
 model = args.model
-room_number = args.room_number
+room_id = args.room_id
 history_type = args.history_type
 max_history = args.max_history
 hint = args.hint
@@ -58,7 +58,7 @@ agent = AgentPlayer(
     history_type=history_type,
     max_retry=max_retry,
 )
-scene_path = f"../levels/scene_data/{level}/{room_number}.json"
+scene_path = f"../levels/scene_data/{level}/{room_id}.json"
 level_data = f"../levels/{level}.json"
 
 if args.record_path is not None:
