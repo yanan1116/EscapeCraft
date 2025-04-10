@@ -102,7 +102,7 @@ options:
                         history type, asserted in full, key, max
   --hint                whether to use hint
   --max_history MAX_HISTORY
-                        max history length
+                        max history length (you need to *set history_type to "max"* to enable this max history length setting)
   --max_retry MAX_RETRY
                         max retry times
 ```
