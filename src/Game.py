@@ -133,6 +133,7 @@ class Game:
             self.base_game = BaseGame(level_data, hint=hint)
         self.__load_game()
         self.level = level
+        self.scene_id = scene_id
         self.room_num = room_num
         self.next_room_id = next_room_id
         
@@ -152,14 +153,17 @@ class Game:
             self.Prompt = PromptTemplate_Base
 
         if scene_id is not None:
-            if room_num > 1:
+            if room_num > 1: # for multiroom settings
                 if next_room_id:
                     level = f"{room_num}rooms-{level}-{scene_id}-{next_room_id}"
                 else:
                     level = f"{room_num}rooms-{level}-{scene_id}"
-            else:
+            else: # for single-room settings
                 level = f"{level}-{scene_id}" if not suffix_level else f"{level}_{suffix_level}-{scene_id}"
-        self.record_save_path = os.path.join(GAME_CACHE_DIR, level, self.agent.model+"_t_1")
+                
+        self.record_save_path = os.path.join(GAME_CACHE_DIR, level, self.agent.model+"_t_1") 
+        # _t_i: the i-th run (run_id) of level-scene_id, if tested for multiple runs
+        # the following lines automatically detect if a record for a scene exists, and will increase the run_id for multiple runs
         if not os.path.exists(self.record_save_path):
             os.makedirs(self.record_save_path)
         else:
@@ -479,12 +483,12 @@ class Game:
                     level_data_list.append(new_level_data)
                     scene_path_list.append(new_scene_path)
 
-        if self.level == "level1":
+        if self.level.startswith("level1"):
             max_allowed_steps = 50
-        elif self.level == "level2":
+        elif self.level.startswith("level2"):
             max_allowed_steps = 75
         else:
-            max_allowed_steps = 75
+            max_allowed_steps = 100
 
         grab_tp = 0
 
