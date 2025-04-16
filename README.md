@@ -87,15 +87,15 @@ python load_scene.py --scene_path path/to/levels
 ### Run the game
 The options for the evalution are listed as following:
 ```bash
-usage: main.py [-h] [--level LEVEL] [--model MODEL] [--room_id ROOM_ID] [--record_path RECORD_PATH] [--history_type HISTORY_TYPE] [--hint]
+usage: main.py [-h] [--level LEVEL] [--model MODEL] [--scene_id SCENE_ID] [--room_num ROOM_NUM] [--record_path RECORD_PATH] [--history_type HISTORY_TYPE] [--hint]
                [--max_history MAX_HISTORY] [--max_retry MAX_RETRY]
 
 options:
   -h, --help            show this help message and exit
   --level LEVEL         level name
   --model MODEL         model name
-  --room_id ROOM_ID
-                        generated room_id of level "LEVEL"
+  --scene_id SCENE_ID
+                        generated scene_id for each rooms in level "LEVEL"
   --record_path RECORD_PATH
                         record path to load
   --history_type HISTORY_TYPE
@@ -105,17 +105,19 @@ options:
                         max history length (you need to *set history_type to "max"* to enable this max history length setting)
   --max_retry MAX_RETRY
                         max retry times
+  --room_num ROOM_NUM
+                        number of rooms, enabled for multi-room settings
 ```
 For example, you can load the third scene generated for level3 (aka "Diffuculty-3" in our paper) and evaluate the model `gpt-4o` with the history type `full`:
 ```bash
 cd src
-python main.py --level level3 --room_id 3 --model gpt-4o --history_type full
+python main.py --level level3 --scene_id 3 --model gpt-4o --history_type full
 ```
 
 To load a recorded history, please follow this command:
 ```bash
 cd src
-python main.py --level level3 --room_id 3 --model record --history_type full --record_path path/to/record
+python main.py --level level3 --scene_id 3 --model record --history_type full --record_path path/to/record
 ```
 This is for visualization of a complete escaping history, or to restore a unfinished game (continue running).
 
