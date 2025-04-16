@@ -113,6 +113,7 @@ For example, you can load the third scene generated for level3 (aka "Diffuculty-
 cd src
 python main.py --level level3 --scene_id 3 --model gpt-4o --history_type full
 ```
+Important Note: please do not modify room_num, it is used for multiroom settings (corresponding scripts and data not yet published).
 
 To load a recorded history, please follow this command:
 ```bash
