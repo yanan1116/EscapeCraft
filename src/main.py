@@ -12,7 +12,10 @@ def parse_args():
     parser.add_argument("--level", type=str, help="level name")
     parser.add_argument("--model", type=str, help="model name")
     parser.add_argument(
-        "--room_id", type=int, default=1, help="room_id of the specified level"
+        "--room_num", type=int, default=1, help="the number of rooms in [scene_id]"
+    )
+    parser.add_argument(
+        "--scene_id", type=int, default=1, help="scene_id to load of level [level]"
     )
     parser.add_argument(
         "--record_path", type=str, default=None, help="record path to load"
@@ -21,7 +24,7 @@ def parse_args():
         "--history_type",
         default="full",
         type=str,
-        help="history type, asserted in full, key, max",
+        help="history type, asserted in full, key, max. If you need to use max_history, please set history_type to max",
     )
     parser.add_argument("--hint", action="store_true", help="whether to use hint")
     parser.add_argument(
@@ -36,7 +39,8 @@ args = parse_args()
 
 level = args.level
 model = args.model
-room_id = args.room_id
+room_num = args.room_num
+scene_id = args.scene_id
 history_type = args.history_type
 max_history = args.max_history
 hint = args.hint
@@ -52,21 +56,22 @@ else:
         agent_sys_prompt = PromptTemplate_Base.SYS_PROMPT
 
 agent = AgentPlayer(
-    system_prompt=agent_sys_prompt,
-    model=model,
-    max_history=max_history,
-    history_type=history_type,
+    system_prompt=agent_sys_prompt, model=model,
+    history_type=history_type, max_history=max_history,
     max_retry=max_retry,
 )
-scene_path = f"../levels/scene_data/{level}/{room_id}.json"
+scene_path = f"../levels/scene_data/{level}/{scene_id}.json"
 level_data = f"../levels/{level}.json"
 
 if args.record_path is not None:
     game = Game(
-        agent, scene_path, level_data, level, hint=hint, record_path=args.record_path
+        agent, scene_path, level_data, level, 
+        room_num = room_num, scene_id = scene_id, hint=hint, 
+        record_path=args.record_path
     )
 
 else:
-    game = Game(agent, scene_path, level_data, level, hint=hint)
+    game = Game(agent, scene_path, level_data, level, 
+                room_num = room_num, scene_id = scene_id, hint=hint)
 
 game.main()
