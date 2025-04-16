@@ -127,6 +127,31 @@ This is for visualization of a complete escaping history, or to restore a unfini
 
 > coming soon!
 
+### Evaluation
+
+Use the provided eval_rst.py file:
+```bash
+python eval_rst.py 
+  --level level3
+  --game_cache [path_to_your_record_dir, e.g. game_cache]
+```
+Note that this script will automatically search for all the records.json files under the provided dir. For example, 
+```bash
+game_cache/
+└── level3-1/
+    └── gpt-4o-t-1/
+        └── records.json
+    └── gemini-1.5-pro-t-1/
+        └── records.json
+└── level3-2/
+    └── gpt-4o-t-1/
+        └── records.json
+    └── gemini-1.5-pro-t-1/
+        └── records.json
+    ...
+```
+This script will traverse all scenes of level3 and calculate the results for all records, final results will be grouped by model_name. 
+
 
 ## Citation
 If you find this repository useful, please cite our paper:
