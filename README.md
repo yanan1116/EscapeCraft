@@ -138,16 +138,16 @@ python eval_rst.py
 Note that this script will automatically search for all the records.json files under the provided dir. For example, 
 ```bash
 game_cache/
-└── level3-1/
-    └── gpt-4o-t-1/
-        └── records.json
-    └── gemini-1.5-pro-t-1/
-        └── records.json
-└── level3-2/
-    └── gpt-4o-t-1/
-        └── records.json
-    └── gemini-1.5-pro-t-1/
-        └── records.json
+├── level3-1/
+│   ├── gpt-4o-t-1/
+│   │   └── records.json
+│   ├── gemini-1.5-pro-t-1/
+│   │   └── records.json
+├── level3-2/
+│   ├── gpt-4o-t-1/
+│   │   └── records.json
+│   ├── gemini-1.5-pro-t-1/
+│   │   └── records.json
     ...
 ```
 This script will traverse all scenes of level3 and calculate the results for all records, final results will be grouped by model_name. 
