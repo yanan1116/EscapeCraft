@@ -25,7 +25,7 @@
   - As experienced escape game players, we are curious about how MLLMs would perform in such an environment.
   - We are currently planning a second version. If you are insterested in our project, feel free to contact us. ([✉️email](mailto:w.ziyue1010@gmail.com))
   
-  ☀️ We live to enjoy life, not just to work.
+    ☀️ We live to enjoy life, not just to work.
  
 ## Example of a successful escape
 <p align="center">
