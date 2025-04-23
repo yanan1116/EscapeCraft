@@ -58,7 +58,7 @@ th {
     border-right: 1px solid rgb(155, 188, 255);
 }
 #multi-room-table {
-    width: 70%;
+    width: 75%;
     border-collapse: collapse; /* 去除所有竖线 */
     text-align: center;
     border-radius: 10px;
@@ -93,7 +93,7 @@ th {
 
 /* 单个房间的表格样式 */
 #single-room-table {
-    width: 70%; /* 设置表格宽度为页面宽度的80% */
+    width: 75%; /* 设置表格宽度为页面宽度的80% */
     border-collapse: collapse; /* 去除所有竖线 */
     text-align: center;
     border-radius: 10px;
