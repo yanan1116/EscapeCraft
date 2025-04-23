@@ -44,6 +44,24 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+  <style>
+    /* 水印样式 */
+    body::after {
+        content: "EscapeCraft Group from THUMT";
+        position: fixed;
+        top: 50%;
+        left: 30%; /* 水平居中 */
+        transform: translate(-50%, -50%); /* 调整为完全居中 */
+        font-size: 3em;
+        color: rgba(0, 0, 0, 0.1);
+        font-weight: bold;
+        z-index: 9999;
+        pointer-events: none;
+        white-space: nowrap;
+        text-align: center;
+        transform: rotate(-30deg);
+    }
+  </style>
 </head>
 <body>
 
