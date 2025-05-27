@@ -30,7 +30,12 @@ def parse_args():
     parser.add_argument(
         "--max_history", default=None, type=int, help="max history length"
     )
-    parser.add_argument("--max_retry", default=5, type=int, help="max retry times")
+    parser.add_argument("--max_retry", default=3, type=int, help="max retry times")
+    parser.add_argument("--max_allowed_steps", default=20, type=int, help="max allowed steps to finish the task")
+
+    
+
+
     args = parser.parse_args()
     return args
 
@@ -63,15 +68,15 @@ agent = AgentPlayer(
 scene_path = f"../levels/scene_data/{level}/{scene_id}.json"
 level_data = f"../levels/{level}.json"
 
-if args.record_path is not None:
-    game = Game(
-        agent, scene_path, level_data, level, 
-        room_num = room_num, scene_id = scene_id, hint=hint, 
-        record_path=args.record_path
-    )
+# if args.record_path is not None:
+#     game = Game(
+#         agent, scene_path, level_data, level, 
+#         room_num = room_num, scene_id = scene_id, hint=hint, 
+#         record_path=args.record_path
+#     )
 
-else:
-    game = Game(agent, scene_path, level_data, level, 
-                room_num = room_num, scene_id = scene_id, hint=hint)
+# else:
+game = Game(agent, scene_path, level_data, level, 
+            room_num = room_num, scene_id = scene_id, hint=hint)
 
-game.main()
+game.main(args)

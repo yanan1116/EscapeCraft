@@ -1,8 +1,8 @@
 class PromptTemplate:
     instruction = """You find yourself locked inside a mysterious room, and your ultimate goal is to escape the room.\n
-You can explore the room, interact with objects, inspect items, and solve puzzles. 
-Meanwhile, you should recover the entire story based on your findings, including useful items and obtained notes. 
+You can explore the room, interact with objects, inspect items, and solve puzzles.  
 You can adopt the following actions to explore the room and interact with objects:"""
+ # Meanwhile, you should recover the entire story based on your findings, including useful items and obtained notes.
 
     operations = """
 - move_forward: float, ranged between [-10, 10]. This is the number of meters you want to move forward (negative value means moving backward).
@@ -15,7 +15,7 @@ You can adopt the following actions to explore the room and interact with object
 - read: str, this is the item_id that you want to get detailed information from your bag.
 - rationale: str, represents the rationale of your action. This should explain your decision-making process and help the agent understand your thinking process.
 
-You need to return data in the following format of JSON_string to interact with the scene:
+You need to return data in the following format of JSON_string to interact with the scene and don't say anything else:
 {
     "move_forward": float,
     "rotate_right": float,
@@ -44,21 +44,6 @@ The items in your bag usable include:
 ===
 Please determine the next action(s) that could help you observe the room or obtain useful tools or clues.
 If you find yourself stuck in a corner, try turn around by passing rotate_right.
-You need to return data in the following format of JSON_string to interact with the scene and don't say anything else: 
-{{
-    "move_forward": float,
-    "rotate_right": float,
-    "rotate_down": float,
-    "jump": bool,
-    "look_at": list[x: float, y: float],
-    "grab": bool,
-    "interactions": {{
-        "use_item_id": str,
-        "input": str
-    }},
-    "read": str,
-    "rationale": str
-}}
 """
 
     story_prompt = """You have successfully escaped the room. Now, reconstruct the entire story based on the items you discovered during the game and the overall environment you observed. Follow the steps below to guide your recollection and piece together the full narrative.
@@ -120,35 +105,21 @@ Step 3: Piece together the whole story
 
 
 class PromptTemplate_Base(PromptTemplate):
-    instruction = """You find yourself locked inside a room, and your ultimate goal is to escape the room. i.e. the room escape game.\n
-You can explore the room, interact with objects, inspect items, and resolve puzzles. You can adopt the following actions to explore the room and interact with objects:"""
-
-    SYS_PROMPT = instruction + PromptTemplate.operations
+    
+    SYS_PROMPT = PromptTemplate.instruction + PromptTemplate.operations
 
     SYS_PROMPT_KEYONLY = (
-        instruction
-        + PromptTemplate.operations
-        + "\nDuring the game, you will be provided with only key interaction steps containing useful information, some intemediate redundant steps will be omitted. "
+        SYS_PROMPT + "\nDuring the game, you will be provided with only key interaction steps containing useful information, some intemediate redundant steps will be omitted. "
     )
 
 
-class PromptTemplate_Base2(PromptTemplate):
-    instruction = """You find yourself locked inside a room, and your ultimate goal is to escape the room. i.e. the room escape game.\n
-You can explore the room, interact with objects, inspect items, and resolve puzzles. If you find doors locked or uninteractable, you probably need to search for keys or passwords to unlock the door when interacting with the environment. You can adopt the following actions to explore the room and interact with objects:"""
 
-    SYS_PROMPT = instruction + PromptTemplate.operations
-
-    SYS_PROMPT_KEYONLY = (
-        instruction
-        + PromptTemplate.operations
-        + "\nDuring the game, you will be provided with only key interaction steps containing useful information, some intemediate redundant steps will be omitted. "
-    )
 
 
 class PromptTemplate_Hint(PromptTemplate_Base):
     initial_hint = "===\nHere are some hints: you should get out through a door; if the door is locked, it can be unlocked by key or passward, and you need to find the key or password to the door by exploring the room."
     SYS_PROMPT = (
-        PromptTemplate_Base.instruction + PromptTemplate.operations + initial_hint
+        PromptTemplate_Base.SYS_PROMPT + initial_hint
     )
 
 

@@ -1,37 +1,29 @@
 import os
 import io, base64, httpx, copy, time, requests, re, json
 
-from openai import OpenAI
+from openai import OpenAI,AzureOpenAI
 from PIL import Image
 
 from log_config import configure_logger
 from config import *
+from tokencost import count_message_tokens, count_string_tokens
 
 logger = configure_logger(__name__)
 
 
 retry_flag = True
-# You can change your own client here
-client = OpenAI(
-    base_url=BASE_URL, 
-    api_key=API_KEY,
-    http_client=httpx.Client(
-        base_url=BASE_URL,
-        follow_redirects=True,
-    ),
-)
 
 
-def get_answer(client, model):
-    logger.debug(f'tested model: {model}')
-    completion = client.chat.completions.create(
-        model=model,
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": "hello! who are u?"},
-        ],
-    )
-    return completion.choices[0].message.content
+# def get_answer(client, model):
+#     logger.debug(f'tested model: {model}')
+#     completion = client.chat.completions.create(
+#         model=model,
+#         messages=[
+#             {"role": "system", "content": "You are a helpful assistant."},
+#             {"role": "user", "content": "hello! who are u?"},
+#         ],
+#     )
+#     return completion.choices[0].message.content
 
 def get_answer_img(client, model, image):
     logger.debug(f'tested model: {model}')
@@ -61,8 +53,7 @@ def get_answer_img(client, model, image):
 
 
 class AgentPlayer:
-    def __init__(self, system_prompt, client=client, model="gpt-4o-2024-08-06", 
-                    max_history=None, max_retry=5, history_type="full"):
+    def __init__(self, system_prompt, model, max_history=None, max_retry=3, history_type="full"):
         """
         arg:
         :history_type: str, default 'full', choose from 'full', 'max', 'key'
@@ -75,7 +66,11 @@ class AgentPlayer:
         logger.info("Initializing the agent.")
         
         # base params for the game
-        self.client = client
+        self.client = AzureOpenAI(
+                        azure_endpoint = "https://responsible-ai.openai.azure.com/",  
+                        api_version= "2024-10-01-preview",
+                        api_key = os.environ['AZURE_OPENAI_API_KEY_41']
+                        )
         self.model = model
         self.max_retry = max_retry
         self.history_type = history_type
@@ -194,26 +189,20 @@ class AgentPlayer:
                 else:
                     self.interactions[-1]["content"].append({"type": "text", "text": text})
 
-    def take_down_note(self, message):
-        retry = 0
-        tmp_message = copy.deepcopy(message)
-        tmp_message.append({"role": "user", "content": [{"type": "text", "text": "Take down your current thought on the lock room and how to escape it based on former information. Use word to describe your it not structured format."}]})
-        while retry < self.max_retry:
-            try:
-                completion = self.client.chat.completions.create(
-                    model=self.model,
-                    messages=tmp_message,
-                    temperature=0,
-                )
-                logger.debug("Note already taken!")
-                return self.notes.append(completion.choices[0].message.content)
-            except:
-                logger.warning("Error occur while getting response, restarting...")
-                retry += 1
-                continue
-            
-        logger.exception("Error occur continuously before max_retry, aborting...")    
+    # def take_down_note(self, message):
+    #     retry = 0
+    #     tmp_message = copy.deepcopy(message)
+    #     tmp_message.append({"role": "user", "content": [{"type": "text", "text": "Take down your current thought on the lock room and how to escape it based on former information. Use word to describe your it not structured format."}]})
+        
+    #     completion = self.client.chat.completions.create(
+    #         model=self.model,
+    #         messages=tmp_message,
+    #         temperature=0,
+    #     )
+    #     logger.debug("Note already taken!")
+    #     return self.notes.append(completion.choices[0].message.content)
 
+        
     def get_key_interactions(self):
         if self.last_pos == 0:
             self.key_interactions = copy.deepcopy(self.interactions)
@@ -230,12 +219,12 @@ class AgentPlayer:
     def get_interactions(self):
         # history settings
         if self.history_type == 'full':
-            if self.model.startswith('llama') and len(self.step_meta_info) - 1 >= 22: # context length limits only 22 steps
-                message = self.system_messages + self.interactions[-22 * 2:]
-            elif (self.model.startswith('gpt') or self.model.startswith('claude'))and len(self.step_meta_info) - 1 >= 50: 
-                message = self.system_messages + self.interactions[-50 * 2:]
-            else:
-                message = self.system_messages + self.interactions
+            # if self.model.startswith('llama') and len(self.step_meta_info) - 1 >= 22: # context length limits only 22 steps
+            #     message = self.system_messages + self.interactions[-22 * 2:]
+            # elif (self.model.startswith('gpt') or self.model.startswith('claude')) and len(self.step_meta_info) - 1 >= 50: 
+            #     message = self.system_messages + self.interactions[-50 * 2:]
+            # else:
+            message = self.system_messages + self.interactions
         elif self.history_type == 'key':
             self.get_key_interactions()
             if self.max_history:
@@ -252,22 +241,21 @@ class AgentPlayer:
         message = self.get_interactions()
             
         retry = 0
-        logger.debug("Trying to get answer from agent.")
+        # token_usage = count_message_tokens(message, model="gpt-4-0613")
+        token_usage = 0
+        logger.debug(f"Trying to get answer from agent. msg length:{len(message)} token usage:{token_usage}")
+        # print('message:\n', json.dumps(message))
         while retry < self.max_retry:
             try:             
-                if self.model.startswith('phi'):
-                    completion = self.client.chat.completions.create(
-                        model=self.model, messages=message, max_tokens=1024, stream=False)
-                else:
-                    completion = self.client.chat.completions.create(
-                        model=self.model,
-                        messages=message,
-                        temperature=0,
-                    )
+                completion = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=message,
+                    temperature=0,
+                )
                 logger.debug("Got answer from agent!")
-                return completion.choices[0].message.content
+                return completion.choices[0].message.content.strip()
             except Exception as e:
-                logger.warning(f"Error occur while getting response, receiving: {e}\ncurrent api: {client.base_url}\nrestarting...")
+                logger.warning(f"Error occur while getting response from client")
                 retry += 1
                 continue
             
