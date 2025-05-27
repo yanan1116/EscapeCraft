@@ -22,27 +22,21 @@ Several parts such as the history recovery and scene customization has been remo
 The code has been tested based on vllm and azure openai.
 
 ## Installation
-Refer to the original repo to install. Some libraries have been modified in this `requirements.txt`
+Refer to the original repo to install. Some libraries have been updated in this `requirements.txt`
 
 
 
 ## Run the escape game
 
 you can change the `level`, `scene_id` and `model` to test different task using different models.
+all available scenes/tasks are in `levels` folder.
 ```bash
 cd src
 python main.py --level level3 --scene_id 3 --model gpt-4.1-mini --history_type full --hint
 ```
 
-### Generate a customized scene
-```bash
-cd src/scripts
-python generate_scene.py --setting_path path/to/levels
-```
-Then the scene will be saved automatically in `levels/level_name/`.
 
 
-
-### Evaluation
+## Evaluation
 It is recommended to collect results from outside of the `main.py` and calculate the overall performance. 
 
