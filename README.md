@@ -32,7 +32,7 @@ you can change the `level`, `scene_id` and `model` to test different task using 
 all available scenes/tasks are in `levels` folder.
 ```bash
 cd src
-python main.py --level level3 --scene_id 3 --model gpt-4.1-mini --history_type full --hint
+python main.py --level level3 --scene_id 3 --model gpt-4.1-mini --history_type full --hint --max_allowed_steps 20
 ```
 
 

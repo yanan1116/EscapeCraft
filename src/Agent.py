@@ -14,42 +14,26 @@ logger = configure_logger(__name__)
 retry_flag = True
 
 
-# def get_answer(client, model):
-#     logger.debug(f'tested model: {model}')
-#     completion = client.chat.completions.create(
-#         model=model,
-#         messages=[
-#             {"role": "system", "content": "You are a helpful assistant."},
-#             {"role": "user", "content": "hello! who are u?"},
-#         ],
-#     )
-#     return completion.choices[0].message.content
-
-def get_answer_img(client, model, image):
+def get_answer_img_test(client, model):
     logger.debug(f'tested model: {model}')
     
-    image = Image.open(image)
-    buffered = io.BytesIO()
-    image.save(buffered, format="JPEG")
-    base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
-    
-    if model.startswith('phi'):
-        messages=[
-            {"role": "user", 
-            "content": f'what is in the image? < img src="data:image/jpeg;base64,{base64_image}" />'}]
-    else:
-        messages=[
-            {"role": "user", "content": [
-                {"type": "text", "text": "what is in the image?"},
-                {"type": "image_url", "url": f"data:image/jpeg;base64,{base64_image}"}
-            ]}
-        ],
+    image_url_duck = "https://upload.wikimedia.org/wikipedia/commons/d/da/2015_Kaczka_krzy%C5%BCowka_w_wodzie_%28samiec%29.jpg"
+    image_url_lion = "https://upload.wikimedia.org/wikipedia/commons/7/77/002_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg"
 
     completion = client.chat.completions.create(
         model=model,
-        messages=messages,
+        messages=[{
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What are the animals in these images?"},
+                {"type": "image_url", "image_url": {"url": image_url_duck}},
+            ],
+        }],
+        temperature = 0, max_completion_tokens=20
     )
-    return completion.choices[0].message.content
+    assert completion.choices[0].message.content
+    print(completion.usage.prompt_tokens)
+    print(completion.usage.completion_tokens)
 
 
 class AgentPlayer:
@@ -67,7 +51,7 @@ class AgentPlayer:
         
         # base params for the game
         self.client = AzureOpenAI(
-                        azure_endpoint = "https://responsible-ai.openai.azure.com/",  
+                        azure_endpoint = os.environ['AZURE_ENDPOINT'],  
                         api_version= "2024-10-01-preview",
                         api_key = os.environ['AZURE_OPENAI_API_KEY_41']
                         )
@@ -87,26 +71,18 @@ class AgentPlayer:
         # params for story recovery
         self.notes = []
 
-        # logger.debug("testing communitation: ")
-        # logger.debug(get_answer(client, model))
-
-        if self.model.startswith('llama'):
-            self.system_messages = [
-                {"role": "user", "content": [{"type": "text", "text": system_prompt}]}
-            ]
-        elif self.model.startswith('phi'):
-            self.system_messages = [
-                {"role": "user", "content": system_prompt},
-                {"role": "assistant", "content": "Sure."}
-            ]
-        else:
-            self.system_messages = [
-                {"role": "system", "content": [{"type": "text", "text": system_prompt}]}
-            ]
+        self.system_messages = [
+            {"role": "system", "content": [{"type": "text", "text": system_prompt}]}
+        ]
         self.interactions = []
         self.key_interactions = []
 
         self.img_str_pattern = r"data:image\/[a-zA-Z]+;base64,([A-Za-z0-9+/=]+)"
+
+        self.prompt_tokens = 0
+        self.completion_tokens = 0
+        
+        get_answer_img_test(self.client, self.model)
 
     def add_problem(self, problem, image_path=None):
         content = "" if self.model.startswith('phi') else []
@@ -167,27 +143,24 @@ class AgentPlayer:
         self.step_meta_info[-1]['response'] = response
 
     def __add_problem(self, text):
-        if self.model.startswith('phi'):
-            self.interactions[-1]["content"] += text
+        if not "<img src='data:image/jpeg;base64," in text:
+            self.interactions[-1]["content"].append({"type": "text", "text": text})
         else:
-            if not "<img src='data:image/jpeg;base64," in text:
-                self.interactions[-1]["content"].append({"type": "text", "text": text})
+            match = re.search(self.img_str_pattern, text)
+            if match:
+                img_strs = match.group(1)
+                logger.debug("found a img str in desc")
+                text_split = text.split(f"<img src='data:image/jpeg;base64,{img_strs}'></img>")
+                self.interactions[-1]["content"].append({"type": "text", "text": text_split[0]})
+                self.interactions[-1]["content"].append(
+                    {"type": "image_url", "image_url": {
+                        "url": f"data:image/jpeg;base64,{img_strs}",
+                        "detail": "auto"
+                        }}
+                )
+                self.interactions[-1]["content"].append({"type": "text", "text": text_split[1]})
             else:
-                match = re.search(self.img_str_pattern, text)
-                if match:
-                    img_strs = match.group(1)
-                    logger.debug("found a img str in desc")
-                    text_split = text.split(f"<img src='data:image/jpeg;base64,{img_strs}'></img>")
-                    self.interactions[-1]["content"].append({"type": "text", "text": text_split[0]})
-                    self.interactions[-1]["content"].append(
-                        {"type": "image_url", "image_url": {
-                            "url": f"data:image/jpeg;base64,{img_strs}",
-                            "detail": "auto"
-                            }}
-                    )
-                    self.interactions[-1]["content"].append({"type": "text", "text": text_split[1]})
-                else:
-                    self.interactions[-1]["content"].append({"type": "text", "text": text})
+                self.interactions[-1]["content"].append({"type": "text", "text": text})
 
     # def take_down_note(self, message):
     #     retry = 0
@@ -219,11 +192,6 @@ class AgentPlayer:
     def get_interactions(self):
         # history settings
         if self.history_type == 'full':
-            # if self.model.startswith('llama') and len(self.step_meta_info) - 1 >= 22: # context length limits only 22 steps
-            #     message = self.system_messages + self.interactions[-22 * 2:]
-            # elif (self.model.startswith('gpt') or self.model.startswith('claude')) and len(self.step_meta_info) - 1 >= 50: 
-            #     message = self.system_messages + self.interactions[-50 * 2:]
-            # else:
             message = self.system_messages + self.interactions
         elif self.history_type == 'key':
             self.get_key_interactions()
@@ -253,6 +221,8 @@ class AgentPlayer:
                     temperature=0,
                 )
                 logger.debug("Got answer from agent!")
+                self.prompt_tokens += completion.usage.prompt_tokens
+                self.completion_tokens += completion.usage.completion_tokens
                 return completion.choices[0].message.content.strip()
             except Exception as e:
                 logger.warning(f"Error occur while getting response from client")

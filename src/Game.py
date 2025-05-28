@@ -173,10 +173,7 @@ class Game:
         self.continue_game = continue_game
 
     def __load_game(self):
-        if self.agent.model.startswith("claude"):
-            self.game = LegentGame(self.scene, camera_resolution_width=1960, camera_resolution_height=980)
-        else:
-            self.game = LegentGame(self.scene)
+        self.game = LegentGame(self.scene)
 
     def check_dirs(self, path, i=10):
         _path, idx = path.split('_t_')
@@ -456,16 +453,9 @@ class Game:
 
         logger.info(f"Start playing the game. There are {room_left_to_escape} rooms.")
 
-        # results = []
-
         save_path = self.game.game_shot(self.steps, save_path = self.record_save_path)
         desc = "The initial scene is shown in the picture."
         obj_interact, obj_interact_fail = False, False
-
-        if self.record_path:
-            record_steps = json.load(open(self.record_path, "r", encoding="utf-8"))
-            if self.story_only:
-                self.agent.interactions = deepcopy(self.agent.system_messages)
 
         # for multi-room
         level_data_list = []
@@ -481,65 +471,9 @@ class Game:
                     level_data_list.append(new_level_data)
                     scene_path_list.append(new_scene_path)
 
-        # if self.level.startswith("level1"):
-        #     max_allowed_steps = 10
-        # elif self.level.startswith("level2"):
-        #     max_allowed_steps = 75
-        # else:
-        #     max_allowed_steps = 100
-
         grab_tp = 0
 
         while not self.base_game.clear:
-            # if self.record_path:
-            #     time.sleep(1)
-            #     try:
-            #         response = record_steps[self.steps]["response"]
-            #     except:
-            #         break
-            #     # step_prompt = record_steps[self.steps]["desc"] if self.story_only else None
-            #     step_prompt = record_steps[self.steps]["desc"]
-            #     _img_path = record_steps[self.steps]["save_path"]
-            #     if self.story_only or self.continue_game:
-            #         self.agent.add_problem(step_prompt, image_path=_img_path)
-            #         self.agent.add_response(json.dumps(response))
-            #         if self.continue_game:
-            #             self.agent.step_meta_info[-1]['step_prompt'] = step_prompt
-            #             self.agent.step_meta_info[-1]['response'] = response
-            #             results.append(
-            #                 {
-            #                     "step": self.steps,
-            #                     "desc": self.replace_base64_with_placeholder(step_prompt),
-            #                     "save_path": _img_path,
-            #                     "response": response,
-            #                     "bag": self.base_game.bag_desc,
-            #                     "used_history": len(self.agent.interactions) // 2
-            #                 }
-            #             )
-
-            #     desc, save_path, obj_interact, obj_interact_fail = self.step(response)
-            #     desc = self.check_new_room_desc(desc, escaped_rooms, room_left_to_escape)
-
-            #     if self.base_game.clear and room_left_to_escape > 1:
-            #         self.base_game.clear =False
-            #         room_left_to_escape -= 1
-            #         tmp_bag = self.base_game.bag
-            #         self.base_game.clear = False
-            #         self.game.stop()
-
-            #         scene_path = scene_path_list.pop(0)
-            #         level_data = level_data_list.pop(0)
-            #         logger.warning(f"In a new scene: {scene_path}\nnew level: {level_data}")
-            #         self.scene = json.load(open(scene_path))      
-            #         self.__load_game()
-            #         self.base_game.bag = tmp_bag
-
-            #     if self.steps >= len(record_steps):
-            #         if self.continue_game:
-            #             self.record_path = None
-            #         else:
-            #             break
-            # else:
             bag_len = len(self.base_game.bag_desc)
             response, step_prompt = self.ask_for_action(desc, save_path, obj_interact, obj_interact_fail)
             self.agent.step_meta_info[-1]['step_prompt'] = step_prompt
@@ -551,24 +485,14 @@ class Game:
                 grab_tp += 1
             
             print('step===>', self.steps, 'interactions:', len(self.agent.interactions))
+            print('token usage===>', self.agent.prompt_tokens, self.agent.completion_tokens)
             print('step_prompt===>', self.replace_base64_with_placeholder(step_prompt))
             print('response===>\n', json.dumps(response, indent=2))
             print('bag===>', self.base_game.bag_desc)
             print('grab_tp===>', grab_tp)
 
-            # results.append(step_log)
-            
-            # if response == {}:
-            #     logger.info("Retry failed. Proceed to stroy recovery.")
-            #     with open(os.path.join(self.record_save_path, "records.json"), "w", encoding="utf-8") as f:
-            #         json.dump(results, f, ensure_ascii=False, indent=4)
-            #     break
-
             desc, save_path, obj_interact, obj_interact_fail = self.step(response)
             desc = self.check_new_room_desc(desc, escaped_rooms, room_left_to_escape)
-
-            # with open(os.path.join(self.record_save_path, "records.json"), "w", encoding="utf-8") as f:
-            #     json.dump(results, f, ensure_ascii=False, indent=4)
 
             if self.steps > args.max_allowed_steps:
                 logger.info(f'\n\n{self.steps} steps, force exit!!!\n\n')
