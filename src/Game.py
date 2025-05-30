@@ -28,6 +28,23 @@ logger = configure_logger(__name__)
 
 set_log_level("debug")
 
+from colorama import Fore,init,Style
+def print_msg(message):
+   for ii in message:
+      if ii['role'] == 'user':
+         print(Fore.YELLOW)
+      elif ii['role'] == 'assistant':
+         print(Fore.BLUE)
+      elif ii['role'] == 'system':
+         print(Fore.RED)
+      print(ii['role'], '===>')
+      for content in ii['content']:
+         if content['type'] == 'text':
+            print('* ', 'text===>', content['text'])
+         if content['type'] == 'image_url':
+            print('* ', 'image_url===>', content['image_url'].keys())
+      print(Style.RESET_ALL)
+
 class LegentGame:
     def __init__(self, scene, camera_resolution_width=2048, camera_resolution_height=1024):
         self.scene = scene
@@ -352,7 +369,7 @@ class Game:
         self.__add_steps()
 
         save_path = self.game.game_shot(self.steps, save_path = self.record_save_path)
-        logger.info(f"{self.steps} moved and saved successfully!")
+        logger.info(f"step:{self.steps} --> moved and saved successfully!")
 
         return desc, save_path, obj_interact, obj_interact_fail
 
@@ -382,9 +399,7 @@ class Game:
             )
 
         bag_desc = (
-            self.base_game.bag_desc
-            if self.base_game.bag_desc
-            else "Nothing in your bag."
+            "The items in your bag usable include: " + self.base_game.bag_desc if self.base_game.bag_desc else "Nothing in your bag."
         )
 
         step_prompt = self.Prompt.STEP_PROMPT.format(
@@ -393,23 +408,22 @@ class Game:
 
         self.agent.add_problem(step_prompt, save_path)
 
-        retry = 0
-        while retry < self.max_retry:
-            ori_response = self.agent.ask()
-            assert ori_response, 'response from client is none'
-            response = self.__format_repsonse(ori_response)
-            # if ori_response:
-            #     response = self.__format_repsonse(ori_response)
-            # else:
-            #     response = None
+        # retry = 0
+        # while retry < self.max_retry:
+        ori_response = self.agent.ask()
+        assert ori_response, 'response from client is null'
+        response = self.__format_repsonse(ori_response)
+        # if ori_response:
+        #     response = self.__format_repsonse(ori_response)
+        # else:
+        #     response = None
 
-            if response:
-                return response, step_prompt
-            else:
-                print(ori_response)
-                retry += 1
-        
-        return {}, step_prompt
+        if response:
+            return response, step_prompt
+        else:
+            print(ori_response)
+            # retry += 1
+            return {}, step_prompt
 
     def read_note(self):
         return self.agent.notes
@@ -515,6 +529,8 @@ class Game:
                 else:
                     break
                 
+        print('full msg===>\n')
+        print_msg(self.agent.message)
 
         if self.base_game.clear:
             print(f"Game stop at step {self.steps}. Escaped succesfully!")
@@ -523,5 +539,6 @@ class Game:
             print(f"Game stop at step {self.steps}. Force exit!")
             # results.append({'info': f"Game stop at step {self.steps}. Force exit!"})
 
+        
 
         self.game.stop()  

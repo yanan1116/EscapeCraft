@@ -39,12 +39,17 @@ You must follow the above instructions and don't say anything else except for th
 
     STEP_PROMPT = """{interaction_result}
 ===
-The items in your bag usable include:
 {bag_desc}
 ===
 Please determine the next action(s) that could help you observe the room or obtain useful tools or clues.
-If you find yourself stuck in a corner, try turn around by passing rotate_right.
 """
+
+    advices = """
+    * If you find yourself stuck in a corner, try turn around by passing rotate_right.
+    * Try to explore the environment at the beginning and walk towards the doors within the environment.
+    * Try to find any key or box which are very helpful and useful for your escape; try to interact with them if possible.
+    * avoid doing repetitive actions and avoid falling into dead loops.
+    """
 
     story_prompt = """You have successfully escaped the room. Now, reconstruct the entire story based on the items you discovered during the game and the overall environment you observed. Follow the steps below to guide your recollection and piece together the full narrative.
 
@@ -106,7 +111,7 @@ Step 3: Piece together the whole story
 
 class PromptTemplate_Base(PromptTemplate):
     
-    SYS_PROMPT = PromptTemplate.instruction + PromptTemplate.operations
+    SYS_PROMPT = PromptTemplate.instruction + PromptTemplate.operations + PromptTemplate.advices
 
     SYS_PROMPT_KEYONLY = (
         SYS_PROMPT + "\nDuring the game, you will be provided with only key interaction steps containing useful information, some intemediate redundant steps will be omitted. "

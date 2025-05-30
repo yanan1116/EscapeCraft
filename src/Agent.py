@@ -7,11 +7,13 @@ from PIL import Image
 from log_config import configure_logger
 from config import *
 from tokencost import count_message_tokens, count_string_tokens
-
+import traceback,sys
 logger = configure_logger(__name__)
 
 
 retry_flag = True
+
+
 
 
 def get_answer_img_test(client, model):
@@ -50,11 +52,17 @@ class AgentPlayer:
         logger.info("Initializing the agent.")
         
         # base params for the game
-        self.client = AzureOpenAI(
-                        azure_endpoint = os.environ['AZURE_ENDPOINT'],  
-                        api_version= "2024-10-01-preview",
-                        api_key = os.environ['AZURE_OPENAI_API_KEY_41']
-                        )
+        if model.startswith('gpt-'):
+            self.client = AzureOpenAI(
+                            azure_endpoint = os.environ['AZURE_ENDPOINT'],  
+                            api_version= "2024-10-01-preview",
+                            api_key = os.environ['AZURE_OPENAI_API_KEY_41']
+                            )
+        else:
+            self.client = OpenAI(
+                    base_url=f"http://{os.environ['GPUIP']}:1703/v1",# localhost
+                    api_key="yyy",
+                )           
         self.model = model
         self.max_retry = max_retry
         self.history_type = history_type
@@ -81,7 +89,7 @@ class AgentPlayer:
 
         self.prompt_tokens = 0
         self.completion_tokens = 0
-        
+        self.message = []
         get_answer_img_test(self.client, self.model)
 
     def add_problem(self, problem, image_path=None):
@@ -109,18 +117,15 @@ class AgentPlayer:
         image.save(buffered, format="JPEG")
         base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
-        if self.model.startswith('phi'):
-            self.interactions[-1]["content"] = f'<img src="data:image/png;base64,{base64_image}" /> <===>\n' + self.interactions[-1]["content"]
-        else:
-            self.interactions[-1]["content"].append(
-                {
-                    "type": "image_url",
-                    "image_url": {
-                        "url": f"data:image/jpeg;base64,{base64_image}",
-                        "detail": "high" if not self.model.startswith("claude") else "auto",
-                    },
-                }
-            )
+        self.interactions[-1]["content"].append(
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{base64_image}",
+                    "detail": "high",
+                },
+            }
+        )
 
     def add_response(self, response):
         if self.show_tranist_prompt and len(self.step_meta_info) > 1:
@@ -153,10 +158,8 @@ class AgentPlayer:
                 text_split = text.split(f"<img src='data:image/jpeg;base64,{img_strs}'></img>")
                 self.interactions[-1]["content"].append({"type": "text", "text": text_split[0]})
                 self.interactions[-1]["content"].append(
-                    {"type": "image_url", "image_url": {
-                        "url": f"data:image/jpeg;base64,{img_strs}",
-                        "detail": "auto"
-                        }}
+                    {"type": "image_url", 
+                     "image_url": {"url": f"data:image/jpeg;base64,{img_strs}", "detail": "auto" }}
                 )
                 self.interactions[-1]["content"].append({"type": "text", "text": text_split[1]})
             else:
@@ -189,47 +192,50 @@ class AgentPlayer:
          
         self.last_pos = len(self.step_meta_info)-1
 
-    def get_interactions(self):
+    # def get_interactions(self):
         # history settings
-        if self.history_type == 'full':
-            message = self.system_messages + self.interactions
-        elif self.history_type == 'key':
-            self.get_key_interactions()
-            if self.max_history:
-                message = self.system_messages + self.key_interactions[-2*self.max_history:]
-            else:
-                message = self.system_messages + self.key_interactions
-        elif self.history_type == 'max':
-            message = self.system_messages + self.interactions[-self.max_history * 2:]
-        else:
-            raise NotImplementedError   
-        return message
+        # if self.history_type == 'full':
+        # message = self.system_messages + self.interactions
+        # elif self.history_type == 'key':
+        #     self.get_key_interactions()
+        #     if self.max_history:
+        #         message = self.system_messages + self.key_interactions[-2*self.max_history:]
+        #     else:
+        #         message = self.system_messages + self.key_interactions
+        # elif self.history_type == 'max':
+        #     message = self.system_messages + self.interactions[-self.max_history * 2:]
+        # else:
+        #     raise NotImplementedError   
+        # return message
 
     def ask(self):
-        message = self.get_interactions()
+        self.message = self.system_messages + self.interactions
             
-        retry = 0
+        # retry = 0
         # token_usage = count_message_tokens(message, model="gpt-4-0613")
-        token_usage = 0
-        logger.debug(f"Trying to get answer from agent. msg length:{len(message)} token usage:{token_usage}")
+        # token_usage = 0
+        logger.debug(f"Trying to get answer from agent. msg length:{len(self.message)}")
         # print('message:\n', json.dumps(message))
-        while retry < self.max_retry:
-            try:             
-                completion = self.client.chat.completions.create(
-                    model=self.model,
-                    messages=message,
-                    temperature=0,
-                )
-                logger.debug("Got answer from agent!")
-                self.prompt_tokens += completion.usage.prompt_tokens
-                self.completion_tokens += completion.usage.completion_tokens
-                return completion.choices[0].message.content.strip()
-            except Exception as e:
-                logger.warning(f"Error occur while getting response from client")
-                retry += 1
-                continue
-            
-        logger.error("Error occur continuously before max_retry, aborting...")
+        # while retry < self.max_retry:
+        #     try:  
+          
+        try:         
+            completion = self.client.chat.completions.create(
+                model=self.model,
+                messages=self.message,
+                temperature=0,
+                max_tokens = 256
+            )
+        except Exception as e:
+            traceback.format_exc()
+            print('client_call_error==>', completion)
+            os.system('pkill -f "main.py"')
+
+        logger.debug("Got answer from agent!")
+
+        self.prompt_tokens += completion.usage.prompt_tokens
+        self.completion_tokens += completion.usage.completion_tokens
+        return completion.choices[0].message.content.strip()
 
     def _save_cur_state(self):
         state = {
